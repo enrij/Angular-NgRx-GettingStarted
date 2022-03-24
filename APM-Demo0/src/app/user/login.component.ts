@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { AuthService } from './auth.service';
 
@@ -9,14 +10,21 @@ import { AuthService } from './auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  pageTitle = 'Log In';
+  pageTitle: string = 'Log In';
 
   maskUserName: boolean;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private store: Store<any>
+  ) {
+  }
 
   ngOnInit(): void {
-
+    this.store
+        .select('users')
+        .subscribe((users: any) => this.maskUserName = users.maskUsername);
   }
 
   cancel(): void {
@@ -24,13 +32,13 @@ export class LoginComponent implements OnInit {
   }
 
   checkChanged(): void {
-    this.maskUserName = !this.maskUserName;
+    this.store.dispatch({type: '[User] Mask username'});
   }
 
   login(loginForm: NgForm): void {
     if (loginForm && loginForm.valid) {
-      const userName = loginForm.form.value.userName;
-      const password = loginForm.form.value.password;
+      const userName: any = loginForm.form.value.userName;
+      const password: any = loginForm.form.value.password;
       this.authService.login(userName, password);
 
       if (this.authService.redirectUrl) {
