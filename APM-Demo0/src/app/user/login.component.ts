@@ -4,38 +4,41 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { AuthService } from './auth.service';
+import { getMaskUsername, State } from './state/user.reducer';
 
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  pageTitle: string = 'Log In';
+  pageTitle = 'Log In';
 
   maskUserName: boolean;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private store: Store<any>
+    private store: Store<State>
   ) {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.store
-        .select('users')
-        .subscribe((users: any) => this.maskUserName = users.maskUsername);
+        .select(getMaskUsername)
+        .subscribe((maskUsername: boolean) => {
+          this.maskUserName = maskUsername;
+        });
   }
 
-  cancel(): void {
+  cancel() {
     this.router.navigate(['welcome']);
   }
 
-  checkChanged(): void {
+  checkChanged() {
     this.store.dispatch({type: '[User] Mask username'});
   }
 
-  login(loginForm: NgForm): void {
+  login(loginForm: NgForm) {
     if (loginForm && loginForm.valid) {
       const userName: any = loginForm.form.value.userName;
       const password: any = loginForm.form.value.password;
