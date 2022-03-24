@@ -19,7 +19,7 @@
               <input class="form-control"
                      [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }"
                      id="userNameId"
-                     [type]="maskUserName ? 'password' : 'text'"
+                     [type]="(maskUsername$ | async) ? 'password' : 'text'"
                      placeholder="User Name (required)"
                      required
                      ngModel
