@@ -7,7 +7,7 @@ export const toggleProductCode = createAction(
 
 export const setCurrentProduct = createAction(
   '[Product] Set current product',
-  props<{ product: Product }>()
+  props<{ currentProductId: number }>()
 );
 
 export const clearCurrentProduct = createAction(
@@ -23,11 +23,56 @@ export const loadProducts = createAction(
 );
 
 export const loadProductsSuccess = createAction(
-  '[Product] Load products success 👍🏻',
+  '[Product] Load products ✔',
   props<{ products: Product[] }>()
 );
 
 export const loadProductFailure = createAction(
-  '[Product] Load products failure 👎🏻',
+  '[Product] Load products ❌',
+  props<{ error: string }>()
+);
+
+export const updateProduct = createAction(
+  '[Product] Update product',
+  props<{ product: Product }>()
+);
+
+export const updateProductSuccess = createAction(
+  '[Product] Update product ✔',
+  props<{ product: Product }>()
+);
+
+export const updateProductFailure = createAction(
+  '[Product] Update product ❌',
+  props<{ error: string }>()
+);
+
+export const createProduct = createAction(
+  '[Product] Create product',
+  props<{ product: Product }>()
+);
+
+export const createProductSuccess = createAction(
+  '[Product] Create product ✔',
+  props<{ product: Product }>()
+);
+
+export const createProductFailure = createAction(
+  '[Product] Create product ❌',
+  props<{ error: string }>()
+);
+
+export const deleteProduct = createAction(
+  '[Product] Delete product',
+  props<{ productId: number }>()
+);
+
+export const deleteProductSuccess = createAction(
+  '[Product] Delete product ✔',
+  props<{ productId: number }>()
+);
+
+export const deleteProductFailure = createAction(
+  '[Product] Delete product ❌',
   props<{ error: string }>()
 );
